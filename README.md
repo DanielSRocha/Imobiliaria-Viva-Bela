@@ -14,7 +14,7 @@ Notificações: Atualizações em tempo real sobre novas propriedades ou altera�
 HTML5 CSS3
 
 ## Instalação e Uso
-Clone este repositório para sua máquina local. git clone [meu git] Navegue até a pasta do projeto e abra o arquivo index.html em seu navegador.
+Clone este repositório para sua máquina local. git clone https://github.com/DanielSRocha/Imobiliaria-Viva-Bela Navegue até a pasta do projeto e abra o arquivo index.html em seu navegador.
 
 Explore as propriedades e recursos da imobiliária.
 
