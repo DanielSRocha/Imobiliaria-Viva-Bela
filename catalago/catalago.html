@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="catalago.css">
+    <title>Catálogo de Imóveis</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div id="texto">
+                <h1>Bem-vindo à Viva Bela</h1>
+                <p>Encontre o imóvel dos seus sonhos</p>
+            </div>
+            <nav id="nav">
+                <a class="site" href="../inicio.html">Início</a>
+                <a class="site" href="catalogo.html">Imóveis à Venda</a>
+                <a class="site" href="../formulario/formulario.html">Cadastro</a>
+                <a class="site" href="../sobre/sobre.html">Sobre Nós</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="bem_vindo">
+        <h2>Imóveis à Venda</h2>
+        <div class="catalog" id="lista-anuncios"></div>
+
+    </section>
+
+
+    <script>
+        const listaAnuncios = document.getElementById('lista-anuncios');
+
+        
+        fetch(`https://potential-halibut-5gv67q9xg9v36xj-8000.app.github.dev/core/`)
+            .then(response => response.json())
+            .then(data => {
+                
+                data.forEach(anuncio => {
+                    const divAnuncio = document.createElement('div');
+                    divAnuncio.className = 'property';
+
+                    campos = anuncio['fields']
+
+
+                    const imagem = document.createElement('img');
+                    imagem.src = campos.url_imagem;
+                    imagem.alt = `Imagem do Imóvel ${campos.id}`;
+
+                    const h4 = document.createElement('h4');
+                    h4.textContent = campos.titulo;
+
+                    const descricao = document.createElement('p');
+                    descricao.textContent = campos.descricao;
+
+                    const qtd_quartos = document.createElement('p');
+                    qtd_quartos.textContent = `Quantidade de quartos: ${campos.qtd_quartos}`;
+
+                    const qtd_banheiro = document.createElement('p');
+                    qtd_banheiro.textContent = `Quantidade de banheiros: ${campos.qtd_banheiro}`;
+
+                    const vagas = document.createElement('p');
+                    vagas.textContent = `Quantidade de vagas: ${campos.vagas}`;
+
+                    const tamanho = document.createElement('p');
+                    tamanho.textContent = `Tamanho(m²): ${campos.tamanho}`;
+
+                    const endereco = document.createElement('p');
+                    endereco.textContent = campos.endereco;
+
+                    const valor = document.createElement('p');
+                    valor.textContent = `Preço: R$ ${campos.valor}`;
+
+                    const botaoEditar = document.createElement('button');
+                    botaoEditar.textContent = 'Editar';
+                    botaoEditar.className = 'editar-button';
+                    botaoEditar.addEventListener('click', () => redirecionarParaEdicao(anuncio.pk));
+
+                    const botaoDeletar = document.createElement('button');
+                    botaoDeletar.textContent = 'Deletar';
+                    botaoDeletar.className = 'deletar-button';
+                    botaoDeletar.addEventListener('click', () => deletarAnuncio(anuncio.pk));
+
+                    divAnuncio.appendChild(imagem);
+                    divAnuncio.appendChild(h4);
+                    divAnuncio.appendChild(descricao);
+                    divAnuncio.appendChild(qtd_quartos);
+                    divAnuncio.appendChild(qtd_banheiro);
+                    divAnuncio.appendChild(vagas);
+                    divAnuncio.appendChild(tamanho);
+                    divAnuncio.appendChild(endereco);
+                    divAnuncio.appendChild(valor);
+                    divAnuncio.appendChild(botaoEditar);
+                    divAnuncio.appendChild(botaoDeletar);
+
+
+                    listaAnuncios.appendChild(divAnuncio);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao buscar dados da API:', error);
+            });
+            
+
+            function redirecionarParaEdicao(id) {
+            window.location.href = `../editar/editar.html?id=${id}`;
+            }
+
+            function deletarAnuncio(id) {
+            fetch(`https://potential-halibut-5gv67q9xg9v36xj-8000.app.github.dev/core/deletar/${id}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                })
+                .catch(error => console.error('Erro ao deletar anúncio:', error));
+            }
+
+
+    </script>
+
+</body>
+
+</html>
